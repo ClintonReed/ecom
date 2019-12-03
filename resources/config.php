@@ -7,6 +7,7 @@ ob_start();
 session_start();
 
 // TEMPLATES
+
 //looks for the constant directory separator if it doesn't find - defines it.
 defined("DS") ? null : define("DS", DIRECTORY_SEPARATOR);
 //sets the template name - define the template_front using the path to templates folder / front folder
