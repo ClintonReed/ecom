@@ -26,7 +26,7 @@ defined("DB_PASS") ? null : define("DB_PASS", "");
 //Defines the DB name
 defined("DB_NAME") ? null : define("DB_NAME", "ecom_db");
 
-//Connercts to MySQLite database - (research for deployment)
+//Connects to MySQLite database - (research for deployment)
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 //Requires the functions.php file with all of our functions
