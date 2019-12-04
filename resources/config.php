@@ -36,12 +36,5 @@ require_once("functions.php");
 
 
 
-
-
-
-
-
-
-
 //displays folder and file paths with the magic constant DIR - TEMP_FRONT / TEMP_BACK / DS
 //echo TEMPLATE_FRONT;
