@@ -57,7 +57,7 @@ function get_products()
 
     while($row = fetch_array($query))
     {
-        //The DELIMETER Allows you to use large sets of text with both double and single qoutations - BE AWARE OF SPACING! 
+        //The DELIMETER Allows you to use large sets of text with both double and single quotations - BE AWARE OF SPACING! 
         $product = <<<DELIMETER
         <div class="col-sm-4 col-lg-4 col-md-4">
         <div class="thumbnail">
