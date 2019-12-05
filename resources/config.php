@@ -7,6 +7,7 @@ ob_start();
 session_start();
 
 // TEMPLATES
+
 //looks for the constant directory separator if it doesn't find - defines it.
 defined("DS") ? null : define("DS", DIRECTORY_SEPARATOR);
 //sets the template name - define the template_front using the path to templates folder / front folder
@@ -25,18 +26,11 @@ defined("DB_PASS") ? null : define("DB_PASS", "");
 //Defines the DB name
 defined("DB_NAME") ? null : define("DB_NAME", "ecom_db");
 
-//Connercts to MySQLite database - (research for deployment)
+//Connects to MySQLite database - (research for deployment)
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 //Requires the functions.php file with all of our functions
 require_once("functions.php");
-
-
-
-
-
-
-
 
 
 
