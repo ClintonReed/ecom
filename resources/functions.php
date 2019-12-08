@@ -3,6 +3,27 @@
 //                                               HELPER FUNCTIONS
 
 
+//user message function - set message if called else no message
+function set_message($msg)
+{
+    if (!empty($msg)) {
+        $_SESSION['message'] = $msg;
+    } else {
+        $msg = "";
+    }
+}
+
+//User Message ^^^ works with that
+function display_message()
+{
+    if (isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+}
+
+
+
 //Redirect custom function
 function redirect($location)
 {
@@ -135,7 +156,7 @@ function get_products_in_cat_page()
 
 
 
-
+//GET PRODUCTS FOR SHOP PAGE
 function get_products_in_shop_page()
 {
 
@@ -165,6 +186,59 @@ function get_products_in_shop_page()
     }
 }
 
+
+//USER LOGIN FUNCTION
+function login_user()
+{
+    //Checks for the submit button
+    if (isset($_POST['submit'])) {
+        //uses the escape string function on UN and PW input to ward off sql injections
+        $username = escape_string($_POST['username']);
+        $password = escape_string($_POST['password']);
+        //checks the DB for the username and password / confirms info / if none are found redirects to login.php else redirects to the admin page
+        $query = query("SELECT * FROM users WHERE username = '{$username}' AND password= '{$password}' ");
+        confirm($query);
+
+        if (mysqli_num_rows($query) == 0) {
+            set_message("Your Password or Username are incorrect, re enter and try again.");
+            redirect("login.php");
+        } else {
+            set_message("Welcome to Admin {$username}");
+            redirect("admin");
+        }
+    }
+}
+
+
+//Message function from contact form
+
+function send_message()
+{
+    if (isset($_POST['submit'])) {
+
+        $to = "creedprod@gmail.com"; //where it emails too
+        $from_name = $_POST['name']; 
+        $subject =  $_POST['subject'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+
+
+        $headers = "From: {$from_name} {$email}";
+
+        $result = mail($to, $subject, $message, $headers);
+
+        if(!$result)
+        {
+            set_message("Sorry we could not send your message");
+            redirect("contact.php");
+        }
+        else
+        {
+            set_message("Your message was sent!");
+            redirect("contact.php");
+        }
+    }
+}
 
 
 /*******************************************************************BACK END FUNCTIONS****************************************************************************** */
