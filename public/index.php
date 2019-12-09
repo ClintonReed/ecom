@@ -24,6 +24,8 @@
             </div>
 
             <div class="row">
+
+
                 <!--Displays Products from the database using the get_products function-->
                 <?php
                 get_products();

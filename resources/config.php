@@ -5,6 +5,7 @@ ob_start();
 
 //Turns on sessions
 session_start();
+//session_destroy();
 
 // TEMPLATES
 
