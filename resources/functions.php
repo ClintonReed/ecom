@@ -200,7 +200,7 @@ function login_user()
         confirm($query);
 
         if (mysqli_num_rows($query) == 0) {
-            set_message("Your Password or Username are incorrect, re enter and try again.");
+            set_message("Your Password or Username are incorrect.");
             redirect("login.php");
         } else {
             set_message("Welcome to Admin {$username}");
