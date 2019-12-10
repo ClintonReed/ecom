@@ -13,10 +13,10 @@ if (isset($_GET['add'])) {
     while ($row = fetch_array($query)) {
         if ($row['product_quantity'] != $_SESSION['product_' . $_GET['add']]) {
             $_SESSION['product_' . $_GET['add']] += 1;
-            redirect("checkout.php");
+            redirect("../public/checkout.php");
         } else {
             set_message("We only have " . $row['product_quantity'] . " " . "{$row['product_title']}" . " available!");
-            redirect("checkout.php");
+            redirect("../public/checkout.php");
         }
     }
 
@@ -32,7 +32,7 @@ if (isset($_GET['remove'])) {
         unset($_SESSION['item_total']);
         unset($_SESSION['item_quantity']);
 
-        redirect("checkout.php");
+        redirect("../public/checkout.php");
     }
 }
 
@@ -43,7 +43,7 @@ if (isset($_GET['delete'])) {
     unset($_SESSION['item_total']);
     unset($_SESSION['item_quantity']);
 
-    redirect("checkout.php");
+    redirect("../public/checkout.php");
 }
 
 
@@ -87,9 +87,9 @@ function cart()
                 <td>&#36;{$row['product_price']}</td>
                 <td>{$value}</td>
                 <td>&#36;{$sub}</td>
-                <td><a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>   
-                <a class='btn btn-success' href="cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a>    
-                <a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a> </td>
+                <td><a class='btn btn-warning' href="../resources/cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>   
+                <a class='btn btn-success' href="../resources/cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a>    
+                <a class='btn btn-danger' href="../resources/cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a> </td>
                 </tr>
                 
                 <input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}">

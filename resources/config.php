@@ -32,7 +32,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 //Requires the functions.php file with all of our functions
 require_once("functions.php");
-
+require_once("cart.php");
 
 
 
