@@ -28,16 +28,72 @@ if (isset($_GET['add'])) {
 if (isset($_GET['remove'])) {
     $_SESSION['product_' . $_GET['remove']]--;
 
-    if ($_SESSION['product_' . $_GET['remove']] < 1) {
+    if ($_SESSION['product_' . $_GET['remove']] < 1); {
+        unset($_SESSION['item_total']);
+        unset($_SESSION['item_quantity']);
+    
         redirect("checkout.php");
-    }
+    } 
 }
 
 
 //deletes all items from the cart
 if (isset($_GET['delete'])) {
-    $_SESSION['product_' . $_GET['delete']] = 0;
+    $_SESSION['product_' . $_GET['delete']] = '0';
+    unset($_SESSION['item_total']);
+    unset($_SESSION['item_quantity']);
+    
     redirect("checkout.php");
 }
+
+
+//cart function that queries the DB / pulls all products with product_id / confirms the query / displays the info in a fetch array using the delimeter code in the cart - users can add, remove, and delete products.
+function cart()
+{
+    //total variable
+    $total = 0;
+    //item_quantity variable
+    $item_quantity = 0;
+    //the foreach statement uses the key and value for the associate array for this session
+    foreach ($_SESSION as $name => $value) {
+        // if the value is 0 it doesn't show anything in the cart
+        if ($value > 0) {
+            //the substring will be equal to name of product_(0,8), if it's not equal it won't show anything in the cart
+            if (substr($name, 0, 8) == "product_") {
+
+                $length = strlen($name) - 8;
+
+                $id = substr($name, 8, $length);
+
+                $query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
+                confirm($query);
+
+                while ($row = fetch_array($query)) {
+                    $sub = $row['product_price'] * $value;
+                    $item_quantity += $value;
+                    $product = <<<DELIMETER
+        
+                <tr>
+                <td>{$row['product_title']}</td>
+                <td>&#36;{$row['product_price']}</td>
+                <td>{$value}</td>
+                <td>&#36;{$sub}</td>
+                <td><a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>   
+                <a class='btn btn-success' href="cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a>    
+                <a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a> </td>
+                </tr>
+                DELIMETER;
+
+                    echo $product;
+                }
+
+                $_SESSION['item_total'] = $total += $sub;
+                $_SESSION['item_quantity'] = $item_quantity;
+            }
+        }
+    }
+}
+
+
 
 ?>

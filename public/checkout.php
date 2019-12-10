@@ -1,9 +1,11 @@
 <!--Requires config.php file-->
 <?php require_once("../resources/config.php"); ?>
+<!--Requires cart.php file-->
+<?php require_once("cart.php"); ?>
 <!--Includes header.php file-->
 <?php include(TEMPLATE_FRONT . DS . "header.php") ?>
 
- <!-- Page Content -->
+<!-- Page Content -->
 <div class="container">
 
 
@@ -25,13 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>apple</td>
-                        <td>$23</td>
-                        <td>3</td>
-                        <td>2</td>
-
-                    </tr>
+                    <?php cart(); ?>
                 </tbody>
             </table>
         </form>
@@ -47,7 +43,8 @@
 
                 <tr class="cart-subtotal">
                     <th>Items:</th>
-                    <td><span class="amount">4</span></td>
+                    <td><span class="amount"><?php echo isset($_SESSION['item_quantity']) ? $_SESSION['item_quantity'] : $_SESSION['item_quantity'] = "0"; ?>
+                </span></td>
                 </tr>
                 <tr class="shipping">
                     <th>Shipping and Handling</th>
@@ -56,7 +53,8 @@
 
                 <tr class="order-total">
                     <th>Order Total</th>
-                    <td><strong><span class="amount">$3444</span></strong> </td>
+                    <td><strong><span class="amount">&#36;<?php echo isset($_SESSION['item_total']) ? $_SESSION['item_total'] : $_SESSION['item_total'] = "0"; ?>
+                </span></strong> </td>
                 </tr>
 
 
