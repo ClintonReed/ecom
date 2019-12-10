@@ -2,6 +2,12 @@
 
 //                                               HELPER FUNCTIONS
 
+//last id function
+function last_id()
+{
+    global $connection;
+    return mysqli_insert_id($connection);
+}
 
 //user message function - set message if called else no message
 function set_message($msg)
@@ -217,7 +223,7 @@ function send_message()
     if (isset($_POST['submit'])) {
 
         $to = "creedprod@gmail.com"; //where it emails too
-        $from_name = $_POST['name']; 
+        $from_name = $_POST['name'];
         $subject =  $_POST['subject'];
         $email = $_POST['email'];
         $message = $_POST['message'];
@@ -227,13 +233,10 @@ function send_message()
 
         $result = mail($to, $subject, $message, $headers);
 
-        if(!$result)
-        {
+        if (!$result) {
             set_message("Sorry we could not send your message");
             redirect("contact.php");
-        }
-        else
-        {
+        } else {
             set_message("Your message was sent!");
             redirect("contact.php");
         }
@@ -242,3 +245,26 @@ function send_message()
 
 
 /*******************************************************************BACK END FUNCTIONS****************************************************************************** */
+
+
+function display_orders()
+{
+
+    $query = query("SELECT * FROM orders");
+    confirm($query);
+
+    while ($row = fetch_array($query)) {
+        $orders = <<<DELIMETER
+        <tr>
+        <th>{$row['order_id']}</th>
+        <th>{$row['order_amount']}</th>
+        <th>{$row['order_transaction']}</th>
+        <th>{$row['order_status']}</th>
+        <th>{$row['order_currency']}</th>
+        <td><a class="btn btn-danger" href="../../resources/templates/back/delete_order.php?id={$row['order_id']}"><span class="glyphicon glyphicon-remove"></span></td>
+        </tr>
+        DELIMETER;
+
+        echo $orders;
+    }
+}
