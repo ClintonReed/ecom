@@ -15,6 +15,8 @@ defined("DS") ? null : define("DS", DIRECTORY_SEPARATOR);
 defined("TEMPLATE_FRONT") ? null : define("TEMPLATE_FRONT", __DIR__ . DS . "templates/front");
 //sets the template name - define the template_back using the path to templates folder / back folder
 defined("TEMPLATE_BACK") ? null : define("TEMPLATE_BACK", __DIR__ . DS . "templates/back");
+//sets the upload directory for image uploading for products
+defined("UPLOAD_DIRECTORY") ? null : define("UPLOAD_DIRECTORY", __DIR__ . DS . "uploads");
 
 // DATABASE
 

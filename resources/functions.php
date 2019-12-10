@@ -268,3 +268,85 @@ function display_orders()
         echo $orders;
     }
 }
+
+
+
+
+
+/**********************************************************ADMIN PRODUCTS******************************************************************** */
+
+
+function get_products_in_admin()
+{
+
+
+    $query = query("SELECT * FROM products");
+
+    confirm($query);
+
+    while ($row = fetch_array($query)) {
+        //The DELIMETER Allows you to use large sets of text with both double and single quotations - BE AWARE OF SPACING! 
+        $product = <<<DELIMETER
+        <tr>
+        <td>{$row['product_id']}</td>
+        <td>{$row['product_title']}<br>
+          <a href="index.php?edit_product&id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
+        </td>
+        <td>Category</td>
+        <td>{$row['product_price']}</td>
+        <td>{$row['product_quantity']}</td>
+        <td><a class="btn btn-danger" href="../../resources/templates/back/delete_product.php?id={$row['product_id']}"><span class="glyphicon glyphicon-remove"></span></td>
+        </tr>
+    DELIMETER;
+
+        echo $product;
+    }
+}
+
+/***********************************************************ADDING PRODUCTS************************************************************************** */
+
+function add_product()
+{
+    if (isset($_POST['publish'])) {
+
+        $product_title = escape_string($_POST['product_title']);
+        $product_category_id = escape_string($_POST['product_category_id']);
+        $product_price = escape_string($_POST['product_price']);
+        $product_description = escape_string($_POST['product_description']);
+        $short_desc = escape_string($_POST['short_desc']);
+        $product_quantity = escape_string($_POST['product_quantity']);
+        $product_image = ($_FILES['file']['name']);
+        $image_temp_location = ($_FILES['file']['tmp_name']);
+
+        move_uploaded_file($image_temp_location, UPLOAD_DIRECTORY . DS . $product_image);
+
+        $query = query("INSERT INTO products (product_title, product_category_id, product_price, product_description, short_desc, product_quantity, product_image) VALUES ('{$product_title}', '{$product_category_id}', '{$product_price}', '{$product_description}', '{$short_desc}', '{$product_quantity}', '{$product_image}')");
+        $last_id = last_id();
+        confirm($query);
+        set_message("New Product with id {$last_id} was added");
+        redirect("index.php?products");
+
+    }
+}
+
+function show_categories_add_product_page()
+{
+    //creates a query to select all data from categories
+    $query = query("SELECT * FROM categories");
+
+    // confirm function
+    confirm($query);
+
+    while ($row = mysqli_fetch_array($query)) {
+
+        //The DELIMETER Allows you to use large sets of text with both double and single quotations - BE AWARE OF SPACING! 
+        $categories_options = <<<DELIMETER
+
+        <option value="{$row['cat_id']}">{$row['cat_title']}</option>
+
+DELIMETER;
+
+        echo $categories_options;
+    }
+}
+
