@@ -31,9 +31,9 @@ if (isset($_GET['remove'])) {
     if ($_SESSION['product_' . $_GET['remove']] < 1); {
         unset($_SESSION['item_total']);
         unset($_SESSION['item_quantity']);
-    
+
         redirect("checkout.php");
-    } 
+    }
 }
 
 
@@ -42,7 +42,7 @@ if (isset($_GET['delete'])) {
     $_SESSION['product_' . $_GET['delete']] = '0';
     unset($_SESSION['item_total']);
     unset($_SESSION['item_quantity']);
-    
+
     redirect("checkout.php");
 }
 
@@ -50,10 +50,19 @@ if (isset($_GET['delete'])) {
 //cart function that queries the DB / pulls all products with product_id / confirms the query / displays the info in a fetch array using the delimeter code in the cart - users can add, remove, and delete products.
 function cart()
 {
-    //total variable
+    // Variables
     $total = 0;
-    //item_quantity variable
+
     $item_quantity = 0;
+
+    $item_name = 1;
+
+    $item_num = 1;
+
+    $amount = 1;
+
+    $quantity = 1;
+
     //the foreach statement uses the key and value for the associate array for this session
     foreach ($_SESSION as $name => $value) {
         // if the value is 0 it doesn't show anything in the cart
@@ -82,9 +91,22 @@ function cart()
                 <a class='btn btn-success' href="cart.php?add={$row['product_id']}"><span class='glyphicon glyphicon-plus'></span></a>    
                 <a class='btn btn-danger' href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a> </td>
                 </tr>
+                
+                <input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}">
+                <input type="hidden" name="item_number_{$item_num}" value="{$row['product_id']}">
+                <input type="hidden" name="amount_{$amount}" value="{$row['product_price']}">
+                <input type="hidden" name="quantity_{$quantity}" value="{$value}">
+                <input type="hidden" name="upload" value="1">
+
+
                 DELIMETER;
 
                     echo $product;
+                    //increments the variables by 1 on each loop
+                    $item_name++;
+                    $item_num++;
+                    $amount++;
+                    $quantity++;
                 }
 
                 $_SESSION['item_total'] = $total += $sub;
@@ -95,5 +117,23 @@ function cart()
 }
 
 
+//paypal button function for displaying in cart only if items are in cart
+
+function show_paypal()
+{
+
+    if(isset($_SESSION['item_quantity']) && $_SESSION['item_quantity'] >= 1)
+
+    {
+
+    $paypal_button = <<<DELIMETER
+
+    <input type="image" name="upload" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+
+    DELIMETER;
+
+    return $paypal_button;
+    }
+}
 
 ?>
