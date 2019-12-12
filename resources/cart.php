@@ -81,7 +81,6 @@ function cart()
                     $sub = $row['product_price'] * $value;
                     $item_quantity += $value;
                     $product = <<<DELIMETER
-        
                 <tr>
                 <td>{$row['product_title']}</td>
                 <td>&#36;{$row['product_price']}</td>
@@ -97,8 +96,6 @@ function cart()
                 <input type="hidden" name="amount_{$amount}" value="{$row['product_price']}">
                 <input type="hidden" name="quantity_{$quantity}" value="{$value}">
                 <input type="hidden" name="upload" value="1">
-
-
                 DELIMETER;
 
                     echo $product;
@@ -125,7 +122,6 @@ function show_paypal()
     if (isset($_SESSION['item_quantity']) && $_SESSION['item_quantity'] >= 1) {
 
         $paypal_button = <<<DELIMETER
-
     <input type="image" name="upload" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
 
     DELIMETER;
