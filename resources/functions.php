@@ -290,7 +290,7 @@ function get_products_in_admin()
         <tr>
         <td>{$row['product_id']}</td>
         <td>{$row['product_title']}<br>
-          <a href="index.php?edit_product&id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
+          <a href="index.php?edit_product&id={$row['product_id']}"><img src="../../resources/uploads/{$row['product_image']}" alt=""></a>
         </td>
         <td>Category</td>
         <td>{$row['product_price']}</td>
